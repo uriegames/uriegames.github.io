@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>우리에 게임즈 — 게임 개발 스튜디오</title>
+<meta name="description" content="개성 있는 캐주얼 게임을 만드는 인디 게임 스튜디오입니다. 현재 첫 프로젝트 '막아라! 종이유령 대습격'을 준비 중입니다." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0b0d1a;
+    --bg-2: #12162b;
+    --panel: #171c33;
+    --panel-2: #1e2542;
+    --text: #eef1ff;
+    --text-dim: #a9b0d0;
+    --text-faint: #6f78a0;
+    --accent: #8ab4ff;
+    --accent-2: #b98cff;
+    --line: rgba(255, 255, 255, 0.08);
+    --radius: 18px;
+    --shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text);
+    background:
+      radial-gradient(1200px 600px at 50% -10%, #1c2450 0%, transparent 60%),
+      radial-gradient(900px 500px at 90% 10%, #2a1c46 0%, transparent 55%),
+      var(--bg);
+    min-height: 100vh;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* Starfield */
+  .stars {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  }
+  .stars span {
+    position: absolute; width: 2px; height: 2px; border-radius: 50%;
+    background: #fff; opacity: 0.6;
+    animation: twinkle 3.5s ease-in-out infinite;
+  }
+  @keyframes twinkle { 0%,100%{opacity:.15;} 50%{opacity:.85;} }
+
+  header {
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: blur(12px);
+    background: rgba(11, 13, 26, 0.72);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 66px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: "Jua", sans-serif; font-size: 20px; letter-spacing: .5px; }
+  .brand .dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    box-shadow: 0 0 14px var(--accent);
+  }
+  .nav-links { display: flex; gap: 26px; }
+  .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
+  .nav-links a:hover { color: var(--text); }
+
+  /* Hero */
+  .hero { position: relative; z-index: 1; text-align: center; padding: 90px 0 70px; }
+  .badge {
+    display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: 1px;
+    color: var(--accent); background: rgba(138,180,255,.12);
+    border: 1px solid rgba(138,180,255,.25); padding: 7px 16px; border-radius: 999px;
+    margin-bottom: 22px;
+  }
+  .hero h1 {
+    font-family: "Jua", sans-serif; font-weight: 400;
+    font-size: clamp(34px, 6vw, 58px); line-height: 1.15; margin-bottom: 18px;
+    background: linear-gradient(180deg, #ffffff 0%, #b9c4ff 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero p { color: var(--text-dim); font-size: clamp(15px, 2vw, 18px); max-width: 620px; margin: 0 auto; }
+
+  /* Section */
+  section.block { position: relative; z-index: 1; padding: 40px 0 90px; }
+  .section-head { text-align: center; margin-bottom: 42px; }
+  .section-head h2 { font-family: "Jua", sans-serif; font-weight: 400; font-size: clamp(26px, 4vw, 36px); margin-bottom: 10px; }
+  .section-head p { color: var(--text-faint); font-size: 15px; }
+
+  /* Cards */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 26px; }
+
+  .card {
+    position: relative; background: var(--panel);
+    border: 1px solid var(--line); border-radius: var(--radius);
+    overflow: hidden; box-shadow: var(--shadow);
+    transition: transform .3s ease, border-color .3s ease;
+  }
+  .card:hover { transform: translateY(-6px); border-color: rgba(138,180,255,.35); }
+
+  .card-media { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #05060f; }
+  .card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* Dimmed "준비중" overlay */
+  .card.coming .card-media img { filter: grayscale(0.4) brightness(0.35) blur(1px); transform: scale(1.03); }
+  .card.coming .card-media::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(11,13,26,.35) 0%, rgba(11,13,26,.85) 100%);
+  }
+  .coming-tag {
+    position: absolute; z-index: 2; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  .coming-tag .lock { font-size: 30px; margin-bottom: 8px; opacity: .9; }
+  .coming-tag .label {
+    font-family: "Jua", sans-serif; font-size: 26px; letter-spacing: 3px;
+    color: #fff; text-shadow: 0 2px 16px rgba(0,0,0,.6);
+  }
+  .coming-tag .sub { display: block; margin-top: 6px; font-size: 12px; color: var(--text-dim); letter-spacing: 2px; }
+
+  .card-body { padding: 22px 22px 24px; }
+  .pill { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1px; padding: 5px 12px; border-radius: 999px; margin-bottom: 12px;
+    background: rgba(185,140,255,.14); color: #cbb2ff; border: 1px solid rgba(185,140,255,.3); }
+  .card-body h3 { font-family: "Jua", sans-serif; font-weight: 400; font-size: 22px; margin-bottom: 8px; }
+  .card-body .genre { color: var(--text-faint); font-size: 13px; margin-bottom: 14px; }
+  .card-body .desc { color: var(--text-dim); font-size: 14px; }
+  .meta { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+  .meta span { font-size: 12px; color: var(--text-dim); background: var(--panel-2); border: 1px solid var(--line); padding: 6px 11px; border-radius: 8px; }
+
+  /* About */
+  .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; }
+  .about-grid .txt p { color: var(--text-dim); margin-bottom: 14px; }
+  .about-grid .txt h2 { font-family: "Jua", sans-serif; font-weight: 400; font-size: 30px; margin-bottom: 18px; }
+  .stat-box { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 20px; text-align: center; }
+  .stat .num { font-family: "Jua", sans-serif; font-size: 30px; color: var(--accent); }
+  .stat .cap { font-size: 12px; color: var(--text-faint); margin-top: 4px; }
+
+  /* Contact */
+  .contact { text-align: center; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 50px 30px; box-shadow: var(--shadow); }
+  .contact h2 { font-family: "Jua", sans-serif; font-weight: 400; font-size: 30px; margin-bottom: 12px; }
+  .contact p { color: var(--text-dim); margin-bottom: 24px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #0b0d1a;
+    font-weight: 700; font-size: 15px; padding: 13px 26px; border-radius: 12px;
+    transition: transform .2s, box-shadow .2s; box-shadow: 0 8px 24px rgba(138,180,255,.3);
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(138,180,255,.45); }
+
+  footer { position: relative; z-index: 1; border-top: 1px solid var(--line); padding: 30px 0; text-align: center; color: var(--text-faint); font-size: 13px; }
+  footer .brand { justify-content: center; margin-bottom: 10px; font-size: 16px; color: var(--text); }
+  footer .contact-line { margin-bottom: 6px; }
+  footer .contact-line a { color: var(--text-dim); text-decoration: none; border-bottom: 1px solid var(--line); }
+  footer .contact-line a:hover { color: var(--accent); }
+
+  @media (max-width: 760px) {
+    .nav-links { display: none; }
+    .about-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<header>
+  <div class="wrap nav">
+    <div class="brand"><span class="dot"></span> 우리에 게임즈</div>
+    <nav class="nav-links">
+      <a href="#games">게임</a>
+      <a href="#about">소개</a>
+      <a href="#contact">문의</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <span class="badge">INDIE GAME STUDIO</span>
+      <h1>우리의 상상, 우리의 즐거움, 우리의 게임.<br />우리에 게임즈.</h1>
+      <p>상상력의 한계를 넘어 세상에 없던 경험을 만듭니다.</p>
+    </div>
+  </section>
+
+  <section class="block" id="games">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>우리의 게임</h2>
+        <p>현재 개발 중인 프로젝트를 소개합니다</p>
+      </div>
+
+      <div class="cards">
+        <!-- 프로젝트 1 : 준비중 -->
+        <article class="card coming">
+          <div class="card-media">
+            <img src="assets/game-paperghost.webp" alt="막아라! 종이유령 대습격" />
+            <div class="coming-tag">
+              <div class="lock">🔒</div>
+              <div class="label">준비중</div>
+              <span class="sub">COMING SOON</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <span class="pill">개발 중</span>
+            <h3>막아라! 종이유령 대습격</h3>
+            <div class="genre">타워 디펜스 · 캐주얼</div>
+            <p class="desc">달빛 아래 몰려오는 종이유령들을 막아내는 아기자기한 타워 디펜스 게임. 자세한 내용은 준비되는 대로 공개됩니다.</p>
+            <div class="meta">
+              <span>📱 모바일</span>
+              <span>🛡️ 타워디펜스</span>
+              <span>⏳ 출시 미정</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="about">
+    <div class="wrap about-grid">
+      <div class="txt">
+        <h2>스튜디오 소개</h2>
+        <p>우리는 작지만 단단한 인디 게임 스튜디오입니다. 손이 가는 아기자기한 아트와 몰입감 있는 게임 플레이로, 누구나 가볍게 즐길 수 있는 캐주얼 게임을 만드는 것을 목표로 합니다.</p>
+        <p>현재 첫 프로젝트를 열심히 개발 중이며, 완성도 높은 게임으로 여러분을 찾아뵙겠습니다.</p>
+      </div>
+      <div class="stat-box">
+        <div class="stat"><div class="num">1</div><div class="cap">개발 중 프로젝트</div></div>
+        <div class="stat"><div class="num">∞</div><div class="cap">아이디어</div></div>
+        <div class="stat"><div class="num">100%</div><div class="cap">열정</div></div>
+        <div class="stat"><div class="num">2026</div><div class="cap">설립</div></div>
+      </div>
+    </div>
+  </section>
+
+
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span> 우리에 게임즈</div>
+    <div class="contact-line">문의 : <a href="mailto:spalstlr321@gmail.com">spalstlr321@gmail.com</a></div>
+    <div>© 2026 우리에 게임즈. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  // generate starfield
+  (function () {
+    var host = document.getElementById("stars");
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < 70; i++) {
+      var s = document.createElement("span");
+      s.style.left = Math.random() * 100 + "%";
+      s.style.top = Math.random() * 100 + "%";
+      s.style.animationDelay = (Math.random() * 3.5).toFixed(2) + "s";
+      var scale = (Math.random() * 1.6 + 0.4).toFixed(2);
+      s.style.transform = "scale(" + scale + ")";
+      frag.appendChild(s);
+    }
+    host.appendChild(frag);
+  })();
+</script>
+</body>
+</html>
