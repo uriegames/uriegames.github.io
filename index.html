@@ -2,7 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />  
+<meta name="google-site-verification" content="pD6FeAieUlkQAJlz0eDbnZBU2A1WEpASMtHDuA1HeUE" />
 <title>우리에 게임즈 — 게임 개발 스튜디오</title>
 <meta name="description" content="개성 있는 캐주얼 게임을 만드는 인디 게임 스튜디오입니다. 현재 첫 프로젝트 '막아라! 종이유령 대습격'을 준비 중입니다." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -162,17 +163,9 @@
   footer .contact-line a { color: var(--text-dim); text-decoration: none; border-bottom: 1px solid var(--line); }
   footer .contact-line a:hover { color: var(--accent); }
 
-  /* ── 소셜 링크 (X / 트위터 등) ───────────────────────── */
-  .socials { display: flex; justify-content: center; gap: 12px; margin: 14px 0 4px; }
-  .social {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 40px; height: 40px; border-radius: 10px;
-    background: var(--panel-2); border: 1px solid var(--line);
-    color: var(--text-dim); text-decoration: none;
-    transition: transform .2s, border-color .2s, color .2s, background .2s;
-  }
-  .social:hover { transform: translateY(-2px); color: #fff; background: #000; border-color: rgba(255,255,255,.25); }
-  .social svg { width: 18px; height: 18px; fill: currentColor; }
+  /* 카드 안 X계정 링크 (클릭 가능) */
+  .card .meta a { color: var(--accent); text-decoration: none; }
+  .card .meta a:hover { text-decoration: underline; }
 
   /* 카드가 클릭 가능함을 표시 */
   .card { cursor: pointer; }
@@ -212,7 +205,10 @@
   .modal-body { padding: 28px 32px 34px; }
   .modal-body .pill { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1px; padding: 5px 12px; border-radius: 999px; margin-bottom: 12px; background: rgba(185,140,255,.14); color: #cbb2ff; border: 1px solid rgba(185,140,255,.3); }
   .modal-body h2 { font-family: "Jua", sans-serif; font-weight: 400; font-size: 30px; margin-bottom: 6px; }
-  .modal-body .genre { color: var(--text-faint); font-size: 14px; margin-bottom: 18px; }
+  .modal-body .genre { color: var(--text-faint); font-size: 14px; margin-bottom: 14px; }
+  .modal-body .links { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+  .modal-body .links a { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--text); background: var(--panel-2); border: 1px solid var(--line); padding: 8px 14px; border-radius: 10px; text-decoration: none; transition: border-color .2s, color .2s; }
+  .modal-body .links a:hover { border-color: var(--accent); color: var(--accent); }
   .modal-body .lead { color: var(--text-dim); font-size: 15px; line-height: 1.7; margin-bottom: 24px; }
 
   /* 스크린샷 갤러리 (가로 스크롤) */
@@ -224,14 +220,13 @@
   .modal-section-title { font-family: "Jua", sans-serif; font-weight: 400; font-size: 18px; margin: 26px 0 12px; }
 
   @media (max-width: 760px) {
-    .modal-body { padding: 22px 20px 28px; }
     .nav-links { display: none; }
     .about-grid { grid-template-columns: 1fr; }
+    .modal-body { padding: 22px 20px 28px; }
   }
 </style>
 </head>
 <body>
-
 <div class="stars" id="stars"></div>
 
 <header>
@@ -249,8 +244,8 @@
   <section class="hero">
     <div class="wrap">
       <span class="badge">INDIE GAME STUDIO</span>
-      <h1>우리의 상상, 우리의 즐거움, 우리의 게임.<br />우리에 게임즈.</h1>
-      <p>상상력의 한계를 넘어 세상에 없던 경험을 만듭니다.</p>
+      <h1>우리의 상상, 우리의 즐거움, 우리의 게임,<br />우리에 게임즈</h1>
+      <p>나의 즐거웠던 경험을 우리의 경험으로</p>
     </div>
   </section>
 
@@ -262,7 +257,7 @@
       </div>
 
       <div class="cards">
-        <!-- 프로젝트 1 : 준비중 (클릭하면 상세 모달이 열립니다 → id="modal-paperghost") -->
+        <!-- 프로젝트 1 : 준비중 (클릭하면 상세 모달 modal-paperghost 가 열림) -->
         <article class="card coming" role="button" tabindex="0" onclick="openModal('modal-paperghost')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('modal-paperghost');}">
           <div class="card-media">
             <img src="assets/game-paperghost.webp" alt="막아라! 종이유령 대습격" />
@@ -281,6 +276,30 @@
               <span>📱 모바일</span>
               <span>🛡️ 타워디펜스</span>
               <span>⏳ 출시 미정</span>
+              <span>𝕏 <a href="https://x.com/PaperGhostDF" target="_blank" rel="noopener" onclick="event.stopPropagation()">@PaperGhostDF</a></span>
+            </div>
+          </div>
+        </article>
+        
+        <!-- 프로젝트 2 : 준비중 (클릭하면 상세 모달 modal-gd3rog 가 열림) -->
+        <article class="card coming" role="button" tabindex="0" onclick="openModal('modal-gd3rog')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('modal-gd3rog');}">
+          <div class="card-media">
+            <img src="assets/GD3ROG_0.png" alt="GD3ROG_0" />
+            <div class="coming-tag">
+              <div class="lock">🔒</div>
+              <div class="label">준비중</div>
+              <span class="sub">COMING SOON</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <span class="pill">개발 중</span>
+            <h3>프로젝트_GD3ROG</h3>
+            <div class="genre">로그라이크 · 캐주얼</div>
+            <p class="desc">미지의 던전을 탐험하라!</p>
+            <div class="meta">
+              <span>Steam</span>
+              <span>🛡️ 로그라이크</span>
+              <span>⏳ 출시 미정</span>
             </div>
           </div>
         </article>
@@ -296,7 +315,7 @@
         <p>현재 첫 프로젝트를 열심히 개발 중이며, 완성도 높은 게임으로 여러분을 찾아뵙겠습니다.</p>
       </div>
       <div class="stat-box">
-        <div class="stat"><div class="num">1</div><div class="cap">개발 중 프로젝트</div></div>
+        <div class="stat"><div class="num">2</div><div class="cap">개발 중 프로젝트</div></div>
         <div class="stat"><div class="num">∞</div><div class="cap">아이디어</div></div>
         <div class="stat"><div class="num">100%</div><div class="cap">열정</div></div>
         <div class="stat"><div class="num">2026</div><div class="cap">설립</div></div>
@@ -308,15 +327,17 @@
 </main>
 
 <!-- ======================================================================
-     상세 모달 (카드 클릭 시 열림)  ·  게임마다 이 블록을 하나씩 복사해서 사용
-     - 새 게임 추가: 아래 블록을 통째로 복사 → id 를 "modal-게임이름" 으로 바꾸고,
-       카드의 onclick="openModal('그 id')" 도 맞춰주세요.
+     상세 모달 (카드 클릭 시 열림)
+     새 게임 추가 시: 모달 블록을 통째로 복사 → id 를 "modal-게임이름" 으로 바꾸고,
+     해당 카드의 onclick="openModal('그 id')" 도 맞춰주세요.
      ====================================================================== -->
+
+<!-- [게임1] 막아라! 종이유령 대습격 -->
 <div class="modal-overlay" id="modal-paperghost" onclick="if(event.target===this)closeModal('modal-paperghost')">
   <div class="modal" role="dialog" aria-modal="true" aria-label="막아라! 종이유령 대습격 상세">
     <button class="modal-close" aria-label="닫기" onclick="closeModal('modal-paperghost')">×</button>
 
-    <!-- 상단 대표 이미지 (좌우로 꽉 차는 배너). 다른 이미지로 바꾸려면 src 수정 -->
+    <!-- 상단 대표 이미지 (좌우로 꽉 차는 배너). 바꾸려면 src 수정 -->
     <div class="modal-hero">
       <img src="assets/game-paperghost.webp" alt="막아라! 종이유령 대습격" />
     </div>
@@ -326,41 +347,77 @@
       <h2>막아라! 종이유령 대습격</h2>
       <div class="genre">타워 디펜스 · 캐주얼 · 모바일</div>
 
-      <!-- 요약 설명 (자유롭게 수정) -->
+      <!-- 외부 링크 (X / 스토어 등) -->
+      <div class="links">
+        <a href="https://x.com/PaperGhostDF" target="_blank" rel="noopener">𝕏 @PaperGhostDF</a>
+        <!-- <a href="스토어_링크" target="_blank" rel="noopener">📱 다운로드</a> -->
+      </div>
+
       <p class="lead">달빛 아래 몰려오는 종이유령들을 막아내는 아기자기한 타워 디펜스 게임. 자세한 내용은 준비되는 대로 공개됩니다.</p>
 
       <!-- ===== 스크린샷 자리 (가로로 넘겨보는 갤러리) =====================
-           아래 주석을 풀고 <img> 의 src 를 실제 스크린샷 경로로 바꿔 넣으세요.
-           이미지는 assets/ 폴더에 넣고 경로를 맞추면 됩니다. (권장 비율 16:9)
-      -->
+           실제 이미지가 준비되면 placeholder 를 지우고 아래 <img> 주석을 푸세요.
+           이미지는 assets/ 폴더에 넣고 경로를 맞추면 됩니다. (권장 비율 16:9) -->
       <div class="modal-section-title">스크린샷</div>
       <div class="shots">
-        <!-- 실제 이미지가 준비되면 아래 placeholder 들을 지우고 <img> 주석을 푸세요 -->
         <div class="shot-placeholder">📷 스크린샷 1 자리</div>
         <div class="shot-placeholder">📷 스크린샷 2 자리</div>
         <div class="shot-placeholder">📷 스크린샷 3 자리</div>
-
         <!--
         <img src="assets/paperghost-shot1.webp" alt="스크린샷 1" />
         <img src="assets/paperghost-shot2.webp" alt="스크린샷 2" />
-        <img src="assets/paperghost-shot3.webp" alt="스크린샷 3" />
         -->
       </div>
 
-      <!-- ===== 상세 설명 자리 ============================================
-           아래 주석을 풀고 내용을 채워 넣으세요. (여러 문단 가능)
-      -->
+      <!-- ===== 상세 설명 자리 (주석 풀고 작성) ===========================-->
       <div class="modal-section-title">게임 소개</div>
       <!--
       <p class="lead">여기에 게임의 세계관, 핵심 재미, 플레이 방식 등을 적어주세요.</p>
-      <p class="lead">두 번째 문단. 특징이나 개발 스토리 등을 자유롭게 작성하세요.</p>
+      <p class="lead">두 번째 문단도 자유롭게 작성하세요.</p>
       -->
       <p class="lead" style="color:var(--text-faint);">상세 설명 준비 중입니다.</p>
+    </div>
+  </div>
+</div>
 
-      <!-- ===== (선택) 영상 / 링크 자리 ===================================
-      <div class="modal-section-title">플레이 영상</div>
-      <p class="lead"><a href="영상_링크" target="_blank" rel="noopener" style="color:var(--accent);">▶ 영상 보러가기</a></p>
+<!-- [게임2] 프로젝트_GD3ROG -->
+<div class="modal-overlay" id="modal-gd3rog" onclick="if(event.target===this)closeModal('modal-gd3rog')">
+  <div class="modal" role="dialog" aria-modal="true" aria-label="프로젝트_GD3ROG 상세">
+    <button class="modal-close" aria-label="닫기" onclick="closeModal('modal-gd3rog')">×</button>
+
+    <div class="modal-hero">
+      <img src="assets/GD3ROG_0.png" alt="프로젝트_GD3ROG" />
+    </div>
+
+    <div class="modal-body">
+      <span class="pill">개발 중</span>
+      <h2>프로젝트_GD3ROG</h2>
+      <div class="genre">로그라이크 · 캐주얼 · Steam</div>
+
+      <!-- 외부 링크 (주석 풀어서 실제 링크 입력) -->
+      <div class="links">
+        <!-- <a href="스팀_링크" target="_blank" rel="noopener">🎮 Steam</a> -->
+        <!-- <a href="https://x.com/your_handle" target="_blank" rel="noopener">𝕏 X계정</a> -->
+      </div>
+
+      <p class="lead">미지의 던전을 탐험하라!</p>
+
+      <div class="modal-section-title">스크린샷</div>
+      <div class="shots">
+        <div class="shot-placeholder">📷 스크린샷 1 자리</div>
+        <div class="shot-placeholder">📷 스크린샷 2 자리</div>
+        <div class="shot-placeholder">📷 스크린샷 3 자리</div>
+        <!--
+        <img src="assets/gd3rog-shot1.webp" alt="스크린샷 1" />
+        <img src="assets/gd3rog-shot2.webp" alt="스크린샷 2" />
+        -->
+      </div>
+
+      <div class="modal-section-title">게임 소개</div>
+      <!--
+      <p class="lead">여기에 게임의 세계관, 핵심 재미, 플레이 방식 등을 적어주세요.</p>
       -->
+      <p class="lead" style="color:var(--text-faint);">상세 설명 준비 중입니다.</p>
     </div>
   </div>
 </div>
@@ -368,18 +425,7 @@
 <footer id="contact">
   <div class="wrap">
     <div class="brand"><span class="dot"></span> 우리에 게임즈</div>
-
-    <!-- 소셜 링크 : X(트위터) href 의 your_handle 을 실제 계정으로 바꿔주세요 -->
-    <div class="socials">
-      <a class="social" href="https://x.com/your_handle" target="_blank" rel="noopener" aria-label="X (트위터)">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-      </a>
-      <!-- 다른 SNS 추가 예시 (주석 풀어서 사용):
-      <a class="social" href="인스타_링크" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
-      -->
-    </div>
-
-    <div class="contact-line">문의 : <a href="mailto:spalstlr321@gmail.com">spalstlr321@gmail.com</a></div>
+    <div class="contact-line">문의 : <a href="mailto:uriegames@gmail.com">uriegames321@gmail.com</a></div>
     <div>© 2026 우리에 게임즈. All rights reserved.</div>
   </div>
 </footer>
@@ -423,4 +469,5 @@
   });
 </script>
 </body>
+  
 </html>
