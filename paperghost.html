@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>막아라! 종이유령 대습격 — 우리에 게임즈</title>
+<meta name="description" content="달빛 아래 몰려오는 종이유령들을 막아내는 아기자기한 타워 디펜스 게임. 우리에 게임즈가 개발 중입니다." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0b0d1a;
+    --panel: #171c33;
+    --panel-2: #1e2542;
+    --text: #eef1ff;
+    --text-dim: #a9b0d0;
+    --text-faint: #6f78a0;
+    --accent: #0b0d1a;
+    --accent-2: #b98cfc;
+    --accent-3: #80aaee;
+    --line: rgba(255, 255, 255, 0.08);
+    --radius: 18px;
+    --shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text);
+    background:
+      radial-gradient(1200px 600px at 50% -10%, #1c2450 0%, transparent 60%),
+      radial-gradient(900px 500px at 90% 10%, #2a1c46 0%, transparent 55%),
+      var(--bg);
+    min-height: 100vh;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  header {
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: blur(12px);
+    background: rgba(11, 13, 26, 0.72);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 66px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: "Jua", sans-serif; font-size: 20px; color: var(--text); text-decoration: none; }
+  .brand .dot { width: 12px; height: 12px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-2), var(--accent-3)); box-shadow: 0 0 14px var(--accent-2); }
+  .back-link { color: var(--text-dim); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
+  .back-link:hover { color: var(--text); }
+
+  main { padding: 36px 0 80px; position: relative; z-index: 1; }
+
+  .hero-media { width: 100%; aspect-ratio: 16 / 8; overflow: hidden; background: #05060f; border-radius: var(--radius); border: 1px solid var(--line); box-shadow: var(--shadow); }
+  .hero-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .pill { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1px; padding: 5px 12px; border-radius: 999px; margin: 24px 0 12px;
+    background: rgba(185,140,252,.14); color: #cbb2ff; border: 1px solid rgba(185,140,252,.3); }
+  h1 { font-family: "Jua", sans-serif; font-weight: 400; font-size: clamp(28px, 5vw, 44px); margin-bottom: 8px; }
+  .genre { color: var(--text-faint); font-size: 15px; margin-bottom: 20px; }
+
+  .links { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+  .links a { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--text); background: var(--panel-2); border: 1px solid var(--line); padding: 10px 16px; border-radius: 10px; text-decoration: none; transition: border-color .2s, color .2s; }
+  .links a:hover { border-color: var(--accent-2); color: var(--accent-2); }
+
+  .meta-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 36px; }
+  .meta-tags span { font-size: 12px; color: var(--text-dim); background: var(--panel); border: 1px solid var(--line); padding: 7px 12px; border-radius: 8px; }
+
+  h2 { font-family: "Jua", sans-serif; font-weight: 400; font-size: 22px; margin: 34px 0 12px; }
+  p.lead { color: var(--text-dim); font-size: 15px; line-height: 1.8; margin-bottom: 12px; }
+
+  .feature-list { list-style: none; margin: 8px 0; }
+  .feature-list li { color: var(--text-dim); font-size: 15px; position: relative; padding-left: 20px; margin-bottom: 8px; }
+  .feature-list li::before { content: ""; position: absolute; left: 3px; top: 10px; width: 7px; height: 7px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-2), var(--accent-3)); }
+
+  footer { position: relative; z-index: 1; border-top: 1px solid var(--line); padding: 30px 0; text-align: center; color: var(--text-faint); font-size: 13px; }
+  footer .brand { justify-content: center; margin-bottom: 10px; font-size: 16px; }
+  footer .links-row { margin-bottom: 8px; }
+  footer .links-row a { color: var(--text-dim); text-decoration: none; border-bottom: 1px solid var(--line); }
+  footer .links-row a:hover { color: var(--accent-2); }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><span class="dot"></span> 우리에 게임즈</a>
+    <a class="back-link" href="index.html">← 홈으로</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="hero-media">
+      <img src="assets/game-paperghost.webp" alt="막아라! 종이유령 대습격" />
+    </div>
+
+    <span class="pill">개발 중</span>
+    <h1>막아라! 종이유령 대습격</h1>
+    <div class="genre">타워 디펜스 · 캐주얼 · 모바일</div>
+
+    <div class="links">
+      <a href="https://x.com/PaperGhostDF" target="_blank" rel="noopener">𝕏 @PaperGhostDF</a>
+      <!-- 스토어 출시 후 아래 주석을 풀고 링크를 넣으세요
+      <a href="스토어_링크" target="_blank" rel="noopener">📱 다운로드</a>
+      -->
+    </div>
+
+    <div class="meta-tags">
+      <span>📱 모바일</span>
+      <span>🛡️ 타워디펜스</span>
+      <span>⏳ 출시 미정</span>
+    </div>
+
+    <p class="lead">달빛 아래 몰려오는 종이유령들을 막아내는 아기자기한 타워 디펜스 게임입니다. 종이로 접은 듯한 유령들이 밤마다 몰려오고, 플레이어는 길목에 방어 타워를 세워 이들을 막아냅니다.</p>
+
+    <h2>게임 특징</h2>
+    <ul class="feature-list">
+      <li>종이 공예 느낌의 아기자기한 아트 스타일</li>
+      <li>길목을 읽고 타워를 배치하는 전략적인 디펜스 플레이</li>
+      <li>가볍게 즐길 수 있는 캐주얼한 난이도와 조작</li>
+    </ul>
+
+    <!-- 스크린샷 (이미지 준비되면 아래 주석을 풀고 assets/ 경로를 맞추세요. 권장 16:9)
+    <h2>스크린샷</h2>
+    <img src="assets/paperghost-shot1.webp" alt="스크린샷 1" />
+    <img src="assets/paperghost-shot2.webp" alt="스크린샷 2" />
+    -->
+
+    <h2>개발 현황</h2>
+    <p class="lead">현재 열심히 개발 중이며, 자세한 내용과 출시 일정은 준비되는 대로 공개할 예정입니다. 소식은 <a href="https://x.com/PaperGhostDF" target="_blank" rel="noopener" style="color:var(--accent-2);">𝕏 @PaperGhostDF</a>에서 확인하실 수 있습니다.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span> 우리에 게임즈</div>
+    <div class="links-row"><a href="index.html">홈</a> · <a href="privacy.html">개인정보처리방침</a></div>
+    <div>© 2026 우리에 게임즈. All rights reserved.</div>
+  </div>
+</footer>
+</body>
+</html>
